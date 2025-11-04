@@ -1,122 +1,173 @@
-# serious3dgame
+# 🎮 MVP – First Person 3D Game (Unity)
 
-A Unity 2022.3 LTS 3D game project with built-in render pipeline.
+A playable first-person locomotion prototype for testing movement, jumping, and sprinting in a simple 3D greybox environment.
 
-## Requirements
+## 🎯 Objective
 
-- Unity Hub
-- Unity 2022.3 LTS (any patch version)
-- WebGL Build Support module (optional, for WebGL builds)
+Create a playable first-person prototype to test locomotion mechanics with smooth movement, sprint, and jump in a simple 3D environment. The game can be opened, modified, and launched from Unity Hub with a single click on Play.
 
-## Getting Started
+## ⚙️ Technical Specifications
 
-### First Time Setup
+- **Engine**: Unity 2022.3 LTS (compatible with 2021.3 LTS and higher)
+- **Pipeline**: Built-in Render Pipeline
+- **Target Platform**: Windows PC
+- **Player Controller**: Unity CharacterController
+- **Input System**: Unity Input System (new)
+- **Main Scene**: Main.unity
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd serious3dgame
-   ```
+## 🎮 Controls
 
-2. **Install Unity 2022.3 LTS**
-   - Open Unity Hub
-   - Go to Installs → Install Editor
-   - Select Unity 2022.3 LTS
-   - During installation, make sure to include:
-     - Windows Build Support (for Windows builds)
-     - Mac Build Support (for macOS builds)
-     - WebGL Build Support (for WebGL builds)
+| Key | Action |
+|-----|--------|
+| W / A / S / D | Forward / Left / Backward / Right movement |
+| Mouse | Camera rotation (first-person view) |
+| Left Shift (hold) | Sprint (speed increase ×1.6) |
+| Space | Jump |
+| Esc | Pause / Game menu |
 
-3. **Open the project**
-   - Open Unity Hub
-   - Click "Add" or "Open"
-   - Navigate to and select the repository root folder (the folder containing this README)
-   - Unity Hub will recognize it as a Unity project
-   - Click on the project to open it in Unity 2022.3 LTS
+## 🧠 Implemented Mechanics
 
-4. **First run**
-   - Unity will import all assets (this may take a few minutes on first launch)
-   - Once loaded, you should see the Main scene in the Hierarchy
-   - Press the Play button ▶️ to test the project
+- **Smooth Walking**: Constant movement with controlled acceleration/deceleration
+- **Sprint**: Speed increase ×1.6 when holding Shift
+- **Jump**: Physical vertical impulse with custom gravity
+- **Air Control**: Limited movement control while airborne
+- **Collisions**: Via CharacterController.Move() to prevent clipping
+- **Camera**: Mouse-controlled, vertical rotation limited to ±85°
 
-### Project Structure
+## 🌍 Test Level ("Greybox")
+
+A minimalist testing arena to validate movement:
+
+- Main platform (40×40 m)
+- Ramps at various slopes
+- Jump blocks (1 m and 1.5 m)
+- Open area for sprint testing
+- Simple obstacles for collision testing
+
+## 🖥️ UI and HUD
+
+- Minimal crosshair at screen center
+- Sprint indicator (optional)
+- FPS counter (Debug mode only)
+- Pause menu with:
+  - Mouse sensitivity
+  - FOV slider
+  - Master volume
+  - Quit Game button
+
+## 🔊 Audio
+
+- **Footsteps**: Short alternating sound, increased frequency during sprint
+- **Jump**: High-pitched sound on takeoff
+- **Landing**: Low-pitched sound when touching ground after a fall
+- **Master Volume**: Adjustable via menu
+
+## 🧩 Project Structure
 
 ```
 Assets/
 ├── Scenes/
-│   └── Main.unity          # Main game scene
-└── Scripts/
-    ├── GameInitializer.cs  # Initialization script (logs startup)
-    └── PlayerController.cs # Player movement script (WASD + Space)
+│   └── Main.unity
+├── Scripts/
+│   ├── FirstPersonController.cs
+│   ├── FirstPersonCamera.cs
+│   ├── GameManager.cs
+│   └── UI/
+│       ├── PauseMenu.cs
+│       ├── Crosshair.cs
+│       └── FPSCounter.cs
+├── Prefabs/
+│   ├── Player.prefab
+│   └── GreyboxEnvironment.prefab
+├── Materials/
+│   ├── Grey.mat
+│   ├── GreyLight.mat
+│   └── GreyDark.mat
+├── InputActions/
+│   ├── PlayerInputActions.inputactions
+│   └── PlayerInputActions.cs
+└── Audio/
+    └── (audio clips)
 ```
 
-## Playing the Game
+## 🧾 Default Parameters
 
-1. **Open the Main scene** (if not already open):
-   - In Unity, navigate to `Assets/Scenes/Main.unity`
-   - Double-click to open
+| Parameter | Value | Description |
+|-----------|-------|-------------|
+| Walk Speed | 4.5 m/s | Base speed |
+| Sprint Speed | 7.2 m/s | Speed with Shift |
+| Jump Force | 4.5 m/s | Vertical impulse |
+| Gravity | -20 m/s² | Gravity force |
+| Look Sensitivity | 0.3 | Mouse sensitivity |
+| Base FOV | 90° | Base field of view |
+| Sprint FOV Kick | +3° | FOV variation during sprint |
 
-2. **Press Play** (▶️ button at the top of the Unity Editor)
+## ✅ Acceptance Criteria
 
-3. **Controls**:
-   - **WASD** or **Arrow Keys**: Move the player cube on the XZ plane
-   - **Space**: Jump (when grounded)
-   - The camera is positioned to view the scene from above
+- ✅ Project opens and runs from Unity Hub without errors
+- ✅ Player moves smoothly with WASD and Shift
+- ✅ Camera responds to mouse without lag or jitter
+- ✅ Collisions are solid (no clipping)
+- ✅ Jump works even at platform edges
+- ✅ FPS ≥ 60 constant at 1080p on medium hardware
+- ✅ No crashes, freezes, or softlocks
 
-4. **Check the Console** for startup messages from GameInitializer
+## 🚀 Getting Started
 
-## Build Targets
+### First Time Setup
 
-This project is configured for:
-- **Standalone** (Windows/macOS/Linux)
-- **WebGL** (requires WebGL Build Support module)
+1. **Install Unity 2022.3 LTS**
+   - Open Unity Hub
+   - Go to Installs → Install Editor
+   - Select Unity 2022.3 LTS
+   - Include Windows Build Support
 
-To build:
+2. **Open the project**
+   - Open Unity Hub
+   - Click "Add" or "Open"
+   - Select the repository root folder
+   - Unity Hub will recognize it as a Unity project
+   - Click on the project to open it
+
+3. **First run**
+   - Unity will import all assets (may take a few minutes)
+   - Once loaded, you should see the Main scene
+   - Press the Play button ▶️ to test
+
+### Playing the Game
+
+1. Open the Main scene: `Assets/Scenes/Main.unity`
+2. Press Play (▶️ button)
+3. Use WASD to move, mouse to look, Shift to sprint, Space to jump
+4. Press Esc to pause
+
+## 🔧 Building
+
+To create a standalone build:
+
 1. Go to **File → Build Settings**
-2. Select your target platform
+2. Select your target platform (PC, Mac & Linux Standalone)
 3. Click **Switch Platform** (if needed)
 4. Click **Build** or **Build And Run**
 
-## WebGL Notes
+## 🔮 Future Extensions (Post-MVP)
 
-To build for WebGL:
-1. Install the WebGL Build Support module via Unity Hub:
-   - Unity Hub → Installs → ⚙️ (gear icon) next to Unity 2022.3 LTS → Add Modules
-   - Check "WebGL Build Support"
-   - Click "Install"
+- Stamina system for sprinting
+- Crouch and slide
+- Different surfaces with distinct sounds
+- Key rebinding
+- Checkpoint system
+- VR support (basic head tracking)
 
-2. After installation, you can build for WebGL:
-   - **File → Build Settings**
-   - Select "WebGL"
-   - Click "Build And Run" or "Build"
-
-## Company and Product Information
-
-- **Company Name**: Default
-- **Product Name**: serious3dgame
-- **Version**: 0.1.0
-
-## Troubleshooting
-
-- **Missing references**: Make sure the project was cloned completely with all files
-- **Scene not loading**: Navigate to `Assets/Scenes/Main.unity` and open it manually
-- **Scripts not compiling**: Wait for Unity to finish importing all assets
-- **Build target unavailable**: Install the required build support module via Unity Hub
-
-## Development
+## 💻 Development
 
 The project uses:
 - Unity 2022.3 LTS
 - Built-in Render Pipeline
-- Legacy Input System (Horizontal/Vertical axes)
+- Unity Input System (new)
+- CharacterController for movement
 - C# for scripting
 
-The Main scene includes:
-- Main Camera with GameInitializer script
-- Directional Light
-- Ground plane (scaled cube)
-- Player cube with Rigidbody and PlayerController script
-
-## License
+## 📝 License
 
 All rights reserved.
